@@ -1,26 +1,65 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+//redux
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import rootReducers from './Reducers'
+import Header from './Components/Header'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+
+// Router 
+
+import {
+    BrowserRouter as Router, Route
+    , Switch
+} from 'react-router-dom'
+import Home from './Components/Home';
+import CarDetails from './Containers/car-details';
+// import CarDetails from './Containers/Cars';
+// import CarsList from './Containers/Cars' ;
+
+
+
+// add middle ware to handel Async Await 
+import promiseMW from 'redux-promise' ;
+
+const createStoreWithMW = applyMiddleware(promiseMW)(createStore)
+export default class App extends React.Component {
+
+
+    render() {
+        return (
+
+            <Provider store={createStoreWithMW(rootReducers)} >
+                <Header />
+                <Router>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col">
+
+                                <Switch>
+                                <Route path="/cars/:id" component={CarDetails} />
+                                <Route path="/cars" component={Home} />
+
+                                    <Route path="/" component={Home} />
+
+
+
+                                </Switch>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </Router>
+
+            </Provider>
+        )
+    }
+
+
+
 }
-
-export default App;
