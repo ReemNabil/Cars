@@ -1,32 +1,49 @@
 
 import CarItem from '../Components/Car-item'
- import React from 'react' ;
-import {connect} from 'react-redux'
+import React ,  { Component }  from 'react';
+import { connect } from 'react-redux'
+import * as actions from '../Actions';
 
-const  CarsList =(props)=>{
-const renderList =({cars})=>{
-  if(cars.length >0)
-     return cars.map((car)=>{
-           return <CarItem history= {props.history} key={car.id} car ={car} />
-     })
+class CarsList extends Component {
+  constructor() {
+      super()
+  }
+  componentDidMount() {
+      //call action creator
+      // console.log(this.props)
+      this.props.getcarsList()
+      }
 
+  renderList({ cars }) {
 
-     return <h1 className="text-center m-5 "> No Cars </h1>
-}
-    return(
-      <div>
-             {renderList(props)}
-      </div>
-    )
+      if (cars)
+          return cars.map((car) => (
+              <div key={car.id}>
+                  <CarItem history={this.props.history} key={car.id} car={car} />
+              </div>
+          ))
 
-
-
-}
-
- const mapStateToProps=(state)=>( {
-  cars : state.cars
-
-})
+      return 'No Cars '
+  }
  
+  render() {
+      console.log(this.props)
+      return (
+          <div >
+              {this.renderList(this.props)}
+           
+              
+          </div>
+      )
+  }
+}
 
-export default  connect(mapStateToProps)(CarsList)  ;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    cars: state.list
+
+  }
+}
+
+export default connect(mapStateToProps , actions)(CarsList);

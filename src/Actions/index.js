@@ -7,13 +7,14 @@ export function getcars(brand = "") {
     let data = axios.get(`${baseURl}?brand=${brand}`)
         .then((response) => {
             console.log(response)
+            console.log(response.data)
             return response.data;
         })
         .catch((err) => {
             console.log(err)
         })
     return {
-        type: 'CARS',
+        type:'CARS',
         payload: data
     }
 
@@ -29,7 +30,27 @@ export function getCardetails(id = 1) {
             console.log(err)
         })
     return {
-        type: 'CAR_Details',
+        type:'CAR_Details',
+        payload: data
+    }
+
+}
+
+
+export function getcarsList() {
+    //fetchApi
+    console.log('getCars list')
+    let data = axios.get(`${baseURl}`)
+        .then((response) => {
+            console.log(response)
+            console.log(response.data)
+            return response.data;
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    return {
+        type:'CARSList',
         payload: data
     }
 

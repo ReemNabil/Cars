@@ -3,7 +3,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import rootReducers from './Reducers'
-import Header from './Components/Header'
 
 
 
@@ -19,6 +18,7 @@ import CarDetails from './Containers/car-details';
 // import CarDetails from './Containers/Cars';
 // import CarsList from './Containers/Cars' ;
 
+import Nav from './Components/nav';
 
 
 // add middle ware to handel Async Await 
@@ -32,8 +32,9 @@ export default class App extends React.Component {
         return (
 
             <Provider store={createStoreWithMW(rootReducers)} >
-                <Header />
                 <Router>
+                <Nav/>
+
                     <div className="container">
                         <div className="row">
                             <div className="col">
